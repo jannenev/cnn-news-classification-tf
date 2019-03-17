@@ -47,6 +47,9 @@ x_text, y = data_helpers.load_newsdata_and_labels()
 
 
 
+### From original Dennybritz version
+https://github.com/dennybritz/cnn-text-classification-tf
+
 ## pre-trained embeddings can be downloaded from 
 ## https://nlp.stanford.edu/projects/glove/
 ## https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing  (https://code.google.com/archive/p/word2vec/)
