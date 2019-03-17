@@ -1,0 +1,52 @@
+
+
+
+In data_helpers.py added new method data_helper.load_newsdata_and_labels() to load newsdata from pickled file.
+
+Made copies of train.py and eval.py as train2.py and eval2.py. 
+In these version2:s the new methods is used to load and use newsdata instead of default data.
+
+
+## train3.py (modification of train2.py)
+
+Added loading of pretrained embeddings word2vec or glove.
+As in https://github.com/cahya-wirawan/cnn-text-classification-tf
+
+data_helpers.py: methods for loading them
+config.yml: new config file
+train3.py 
+   in beginning added loading of embeddings
+   under sess.run(tf.global_variables_initializer()): Added code for embeddings
+
+
+baseline.py  calculates baseline predictions with naive bayes and SVM.
+   
+   
+## TO DO
+
+read all features from pickles and save as csv. Then use csv. Add parameter to filename.
+
+Split data to train, test and eval
+
+
+## modifications_focus
+1.data_helper.py
+add functions to get the data with focus and make attention matrix
+2.text_cnn_focus.py
+# Add a placeholder for attention
+self.attention = tf.placeholder(tf.float32, [None, sequence_length, 1], name="att")
+and add it in the embedding layer
+# add attention
+self.embedded_chars = tf.concat([self.embedded_chars, self.attention], 2)
+embedding_size = embedding_size + 1 # attention
+self.embedded_chars_expanded = tf.expand_dims(self.embedded_chars, -1)
+3.train2_focus.py
+3.1) 
+Changed as my tensorflow version is >1.5. Please change back when running in your machine.
+#FLAGS._parse_flags() # outdated from tf
+# replace by below
+FLAGS(sys.argv)
+3.2)
+load focus, make attention matrix and feed attention to train the model.
+Run:
+python train2_focus.py --num_epochs=30 --batch_size=1000
