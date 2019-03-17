@@ -12,9 +12,44 @@ With GTX 1070 GPU a model with 0.77 accuracy is reached by training about 5 minu
 
 Path to pre-trained embedding file (for example "glove.6B.100d.txt") is defined in beginning of config.yml
 
-# pre-trained embeddings can be downloaded from 
-# https://nlp.stanford.edu/projects/glove/
-# https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing  (https://code.google.com/archive/p/word2vec/)
+### Modifying original Dennybritz code to multilabel 
+
+In file data_helpers.py there is a function
+```
+load_data_and_labels()
+```
+, that loads data with binary-labels.
+
+We added own function to load data with multi labels - in this case 5 labels.
+```
+def load_newsdata_and_labels():
+```
+In this function you read in your own data.
+The labels need to be turned into one-hot form, ie if total 5 labels (0-4) and items label is 2, it would be: 0 0 1 0 0 (the bit 2 is 1 and rest 0)
+
+So in the data_helpers.py function you load your own data, turn it to one-hot and return as: 
+```
+return [x_text, y]
+```
+
+Then in file train.py (in our code version train2.py) replace call to original data loading function with the own version.
+
+```
+# Load data
+# was original
+# print("Loading data...")
+# x_text, y = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.negative_data_file)
+
+### Load own data ################
+print("Loading data...")
+x_text, y = data_helpers.load_newsdata_and_labels()
+```
+
+
+
+## pre-trained embeddings can be downloaded from 
+## https://nlp.stanford.edu/projects/glove/
+## https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing  (https://code.google.com/archive/p/word2vec/)
 
 
 
